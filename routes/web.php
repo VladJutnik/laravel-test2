@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\BlogController::class, 'index']);
 //дали название роуту ->name('getPostsByCategory') для тго что бы обьращаться к нему из html по имени и при желании поменять url он поменяется только тут а в файлах будет его имя!
 Route::get('/category/{slug}', [\App\Http\Controllers\BlogController::class, 'getPostsByCategory'])->name('getPostsByCategory');
+Route::get('/category/{slug_category}/{slug_post}', [\App\Http\Controllers\BlogController::class, 'getPosts'])->name('getPost');
 
 
 
