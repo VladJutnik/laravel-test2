@@ -8,6 +8,7 @@
     <a href="{{route('getPostsByCategory', $slug_category)}}" class="btn btn-outline-primary mb-4">Back</a>
 </div>
 <article>
+    {{--{!! БУДЕТ НОРМАЛЬНЫЙ ТЕКСТ ВОПСРИнимающий тэги !!}--}}
     {!! $post->text !!}
 </article>
 
