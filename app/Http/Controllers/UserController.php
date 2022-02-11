@@ -14,7 +14,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        dd(123123);
+        $users = User::get();
+        //compact('user');
+        return view('user.index', [
+            'users' => $users,
+        ]);
     }
 
     /**
