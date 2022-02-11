@@ -22,7 +22,7 @@ class PostSeeder extends Seeder
         $table->string('slug')->unique();*/
         for($i = 7; $i < 150; $i++){
             DB::table('posts')->insert([
-                'category_id' => rand(1,10),
+                'category_id' => rand(1,6),
                 'title' => 'Пост №'. $i,
                 'description' => 'Описание поста №'. $i,
                 'text' => 'Lorem ' . $i . 'ipsum dolor sit amet, consectetur adipisicing elit. Commodi eos libero molestias, odio qui sapiente! Minus non perferendis repellendus repudiandae similique tempore! At cumque eos fuga mollitia nemo tenetur ut.',
