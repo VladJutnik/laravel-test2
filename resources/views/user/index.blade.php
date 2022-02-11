@@ -1,6 +1,7 @@
 
 @extends('layouts.main-layout')
 @section('content')
+    <a class="btn btn-primary mt-3 mb-2" role="button" href="{{ route('users.create') }}">Добавление пользователя</a>
 <table class="table table-sm">
     <thead>
     <tr>
