@@ -16,14 +16,20 @@
         @endisset
         <div class="row">
             <div class="col">
-                <input name="name" value="{{isset($user) ? $user->name : null}}" type="text" class="form-control"
+                <input name="name" value="{{ old('name', isset($user) ? $user->name : null) }}" type="text" class="form-control"
                        placeholder="Ваш имя" aria-label="Ваш имя">
+                @error('name')
+                <div class="alert alert-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
         </div>
         <div class="row mt-3">
             <div class="col">
-                <input name="email" type="text" value="{{isset($user) ? $user->email : null}}" class="form-control"
+                <input name="email" type="text" value="{{ old('email', isset($user) ? $user->email : null) }}" class="form-control"
                        placeholder="Ваш email" aria-label="Ваш email">
+                @error('email')
+                <div class="alert alert-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
         </div>
         <div class="row mt-4">
