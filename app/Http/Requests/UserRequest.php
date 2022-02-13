@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -23,9 +24,22 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|min:3|max:250',
-            'email' => 'required|unique:users,email|min:3|max:250|email',
+        $rules = [
+            'name' => 'required|min:3|max:255',
+            'email' => [
+                'required',
+                'min:3',
+                'max:255',
+                'email',
+            ],
         ];
+        //Сделали исключение для редактирования уникальных почт
+        if (!empty($this->user)) {
+            $rules['email'][] = Rule::unique('users')->ignore($this->user->id);
+        } else {
+            $rules['email'][] = Rule::unique('users');
+        }
+
+        return $rules;
     }
 }
