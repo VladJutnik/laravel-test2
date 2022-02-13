@@ -11,11 +11,11 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        $users = User::get();
+        $users = User::paginate(15);
         //compact('user');
         return view('user.index', [
             'users' => $users,

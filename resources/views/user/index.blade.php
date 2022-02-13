@@ -5,10 +5,10 @@
 <table class="table table-sm">
     <thead>
     <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Actions</th>
+        <th scope="col" class="text-center">#</th>
+        <th scope="col" class="text-center">Name</th>
+        <th scope="col" class="text-center">Email</th>
+        <th scope="col" class="text-center">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -33,4 +33,5 @@
     @endforeach
     </tbody>
 </table>
+    {{$users->links('vendor.pagination.bootstrap-4')}}
 @endsection
