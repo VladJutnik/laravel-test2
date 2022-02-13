@@ -23,10 +23,10 @@
             </td>
             <td>
                 <form method="POST" action="{{ route('users.destroy', $user) }}">
-                    <a type="button" class="btn btn-warning" href="{{ route('users.edit', $user) }}">Edit</a>
+                    <a type="button" class="btn btn-warning" href="{{ route('users.edit', $user) }}">Редактирование</a>
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger" type="submit">Delete</button>
+                    <button class="btn btn-danger" type="submit">Удалить</button>
                 </form>
             </td>
         </tr>
