@@ -88,6 +88,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('users.index');//это путь в web.php направление поэтому сдесь users
     }
 }
