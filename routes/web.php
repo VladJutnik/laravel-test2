@@ -19,8 +19,20 @@ Route::get('/', [\App\Http\Controllers\BlogController::class, 'index']);
 Route::get('/category/{slug}', [\App\Http\Controllers\BlogController::class, 'getPostsByCategory'])->name('getPostsByCategory');
 Route::get('/category/{slug_category}/{slug_post}', [\App\Http\Controllers\BlogController::class, 'getPosts'])->name('getPost');
 
-Route::resource('users', UserController::class);
+//Вы можете ограничить формат параметров вашего маршрута с помощью метода where() на экземпляре маршрута.
+// Метод where() принимает название параметра и регулярное выражение, определяющее ограничения для параметра:
+//->where('name', '[A-Za-z]+');
+/*Route::get('user/{name}', function ($name) {
+})->where('name', '[A-Za-z]+');
+*/
 
-/*Route::get('/', function () {
-    return view('pages.index');
-});*/
+//Это пример обезательного апараметра!!1
+Route::get('/user/{id}', function ($id) {
+    //return view('welcome');
+    return "Вы ввели $id";
+});
+//Это пример не обезательного апараметра!!1
+Route::get('user/{name?}', function ($name = null) {
+    return $name;
+});
+

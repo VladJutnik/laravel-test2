@@ -14,7 +14,7 @@ class BlogController extends Controller
          //все записи ::all()
          //все записи c сортировкой ::orderBy('title')->get()
         //$posts = Post::all();
-        $posts = Post::paginate(5);
+        $posts = Post::paginate(2);
 
         return view('pages.index', [
             'posts' => $posts,
