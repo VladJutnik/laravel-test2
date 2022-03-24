@@ -10,6 +10,7 @@
 <body>
 <div class="container">
     <a href="{{route('users.index')}}" class="btn btn-outline-primary mt-5">Перейти на страницу с Пользователями</a>
+    <a href="{{route('info.index')}}" class="btn btn-outline-primary mt-5">Перейти на страницу с встроенными возможностями пользователей</a>
     <h1 class="mt-5 mb-4 text-center">@yield('title')</h1>
     @yield('content')
 </div>
