@@ -69,13 +69,16 @@ class InfoUserController extends Controller
         print_r(json_decode($data));
         print_r('</pre>');
         print_r('<br><br><br>');*/
-        foreach ($data as $key =>$dat){
+       /* foreach ($data as $key =>$dat){
+            print_r('wdwdw');
+            print_r('<br><br><br>');
             print_r($key);
             print_r('<br><br><br>');
             print_r($dat['name']);
             print_r('<br><br><br>');
-        }
-        return view('info-user.show', ['info'=>$info, 'datas'=>$data]);//этот путь перенаправление в нашу вью !!!  поэтому сдесь user
+        }*/
+        //return view('info-user.show', ['info'=>$info, 'datas'=>$data]);//этот путь перенаправление в нашу вью !!!  поэтому сдесь user
+        return view('info-user.show', /*['info'=>$info, 'datas'=>$data]*/);//этот путь перенаправление в нашу вью !!!  поэтому сдесь user
     }
 
     public function edit(InfoUser $user)
