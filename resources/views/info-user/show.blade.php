@@ -124,6 +124,18 @@
             dragAndDrop()
         }
         button.addEventListener('click', addBoard)
+        function changeTitle(){
+            const titles = document.querySelectorAll('.title')
+            titles.forEach(title =>{
+                title.addEventListener('click', e => {
+                    console.log(title)
+                    old = e.target.textContent
+                    e.target.textContent = ''
+                })
+            })
+        }
+
+        changeTitle()
     </script>
 
     {{--<a class="btn btn-primary mt-3 mb-2" role="button" href="{{ route('info.create') }}">Добавление пользователя</a>--}}

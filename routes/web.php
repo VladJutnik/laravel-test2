@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,8 @@ Route::get('/category/{slug}', [\App\Http\Controllers\BlogController::class, 'ge
 Route::get('/category/{slug_category}/{slug_post}', [\App\Http\Controllers\BlogController::class, 'getPosts'])->name('getPost');
 Route::resource('users', UserController::class);
 Route::resource('info', InfoUserController::class);
+Route::resource('/employees', EmployeeController::class);
+//Route::get('/employees/', [EmployeeController::class, 'index'])->name('index');
 
 //Вы можете ограничить формат параметров вашего маршрута с помощью метода where() на экземпляре маршрута.
 // Метод where() принимает название параметра и регулярное выражение, определяющее ограничения для параметра:
