@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <label for="textInput">Наименование элемента</label>
-                <input type="text" class="form-control" id="textInput">
+                <input type="text" class="form-control textInput" id="textInput">
                 <button id="yes" class="yes">Сохранить</button>
                 <button id="no" class="no">Отменить</button>
             </div>

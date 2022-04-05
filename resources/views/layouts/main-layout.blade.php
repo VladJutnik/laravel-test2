@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
     <a href="{{route('users.index')}}" class="btn btn-outline-primary mt-5">Перейти на страницу с Пользователями</a>
     <a href="{{route('info.index')}}" class="btn btn-outline-primary mt-5">Перейти на страницу с встроенными возможностями пользователей</a>
     <a href="{{route('employees.index')}}" class="btn btn-outline-primary mt-5">Пример с модальным </a>
