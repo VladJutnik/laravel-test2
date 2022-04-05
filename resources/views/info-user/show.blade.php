@@ -102,10 +102,12 @@
             </div>
             <hr>
             <button id="ready_obj" class="btn btn-block btn-outline-primary">Собрать объект</button>
+            <button id="preview" class="btn btn-block btn-outline-primary mt-5">Предпросмотр страницы</button>
             <!--ЭТО ПРОСТО ДИВ ДЛЯ ТОГО ЧТО ПОКАЗАТЬ КАК СОБРАЛСЯ ОБЪЕКТ-->
-            <div id="result"></div>
+            <div id="result" class="container-fluid mt-5 p-2"></div>
         </div>
     </div>
+
     <script>
         /*console.log(document.getElementById('exampleModal'))
         $('#exampleModal').modal('show')*/
@@ -113,24 +115,13 @@
         const buttonAdd1 = document.getElementById('add_btn1'),
             buttonAdd2 = document.getElementById('add_btn2'),
             buttonAdd3 = document.getElementById('add_btn3'),
-            buttonFinish = document.getElementById('ready_obj')
+            buttonFinish = document.getElementById('ready_obj'),
+            buttonPreview = document.getElementById('preview')
         //console.log(button)
         let idItemsEl = 1
         let idBoardEl = 1
         let arr = {} // временный от туда можно будет удалять данные или положить данные хз пока
         let data = [] //финальный объект со всеми данными
-
-        //data[111] = {
-        //    name: 'name'
-        //}
-        //console.log(data)
-        //data[111] = {
-        //    'fff': {
-        //        gg: 'ggg'
-        //    }
-        //}
-        //console.log(data)
-
         //это инициирует перемещения из правой колонке
         let dragItem = '' //сюда делаем копию элемента которую будем перемещать
         let itemId = '' //сюда определяем какой элемент мы перетащили дата и время или просто инпут или текс арея
@@ -164,9 +155,7 @@
                 })
             }
         }
-
         dragAndDropRightColumn()
-
         function dragAndDropZones()
         {
             //находим все зоны в которые можно скидывать элементы
@@ -191,7 +180,6 @@
                 })
             }
         }
-
         dragAndDropZones()
 
         //фнкции работы с модальными окнами
@@ -212,7 +200,6 @@
                     break;
             }
         }
-
         function yesBtnModalInput()
         {
             //https://itchief.ru/javascript/associative-arrays
@@ -238,10 +225,9 @@
                     break;
             }
             idItemsEl++ //для новых id
-            console.log(arr)
+            //console.log(arr)
             //document.getElementById('result').append(arr)
         }
-
         function noBtnModal()
         {
             dragItem.remove()
@@ -276,9 +262,7 @@
             dragAndDropZones()
             //changeTitle()
         }
-
         buttonAdd1.addEventListener('click', addBoard1)
-
         //ф-ции для добавления колонок
         function addBoard2()
         {
@@ -299,9 +283,7 @@
             dragAndDropZones()
             //changeTitle()
         }
-
         buttonAdd2.addEventListener('click', addBoard2)
-
         //ф-ции для добавления колонок
         function addBoard3()
         {
@@ -323,13 +305,12 @@
             dragAndDropZones()
             //changeTitle()
         }
-
         buttonAdd3.addEventListener('click', addBoard3)
-
 
         //собираем все карточки в объект
         function finish()
         {
+            data = []
             //тут хочу получить список всех лини у линии есть колонки в которых есть элементы которые мы перенесли
             const boards = document.querySelector('.boards'),
                 rowItems = boards.querySelectorAll('.zone')
@@ -377,7 +358,6 @@
             }
             console.log(data)
         }
-
         //это по старому
         function finish2()
         {
@@ -423,8 +403,101 @@
             }
             console.log(data)
         }
-
         buttonFinish.addEventListener('click', finish)
+        //Для отрисовки страницы
+        /*
+        * <label for="textInput">Наименование элемента</label>
+                <input type="text" class="form-control textInput" id="textInput">
+        * */
+        function preview()
+        {
+            let content = '';
+            if(data !== []){
+                content += '<div class="container-fluid rounded border border-primary">'
+                data.forEach(function(item, i, arr) {
+                    //console.log(item.col)
+                    content += '<div class="row">'
+                    content += `<h5 class="text-center mb-2">${item.nameRow}</h5>`
+                    if(item.col.length === 1){
+                        item.col.forEach(function(item, i, arr) {
+                            //console.log(item)
+                            content += '<div class="col-12">'
+                            item.element.forEach(function(item, i, arr) {
+                                //console.log(item)
+                                if(item.type === "input"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="text" class="form-control" id="${item.id}">
+                                        <br>
+                                    `
+                                } else if(item.type === "date"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="date" class="form-control " id="${item.id}">
+                                        <br>
+                                    `
+                                }
+                            })
+                            content += '</div>'
+                        })
+                    } else if(item.col.length === 2){
+                        item.col.forEach(function(item, i, arr) {
+                            //console.log(item)
+                            content += '<div class="col-6">'
+                            item.element.forEach(function(item, i, arr) {
+                                //console.log(item)
+                                if(item.type === "input"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="text" class="form-control" id="${item.id}">
+                                        <br>
+                                    `
+                                } else if(item.type === "date"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="date" class="form-control " id="${item.id}">
+                                        <br>
+                                    `
+                                }
+                            })
+                            content += '</div>'
+                        })
+                    } else {
+                        item.col.forEach(function(item, i, arr) {
+                            //console.log(item)
+                            content += '<div class="col-4">'
+                            item.element.forEach(function(item, i, arr) {
+                                //console.log(item)
+                                if(item.type === "input"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="text" class="form-control" id="${item.id}">
+                                        <br>
+                                    `
+                                } else if(item.type === "date"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="date" class="form-control " id="${item.id}">
+                                        <br>
+                                    `
+                                }
+                            })
+                            content += '</div>'
+                        })
+                    }
+                    content += '</div><br>'
+                })
+                content += '</div>'
+            } else {
+                content += `
+                    <div class="alert alert-danger text-center font-weight-bold" role="alert">
+                        Данных на странице не найдено! Добавьте колонки и элементы на страницу!
+                    </div>`
+            }
+            $('#result').html(content);
+        }
+        buttonPreview.addEventListener('click', preview)
+        //Это были первые наброски
         //function changeTitle(){
         //    const titles = document.querySelectorAll('.title')
         //    titles.forEach(title =>{
