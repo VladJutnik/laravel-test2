@@ -81,7 +81,7 @@
                             <span> + </span> Добавить редактируемое поле c 3-мя колонками
                         </div>
                         <div class="crt1 mt-2">
-                            <div id="cart1" class="list_item p-2 border bg-gradient-cyan rounded btn-block" draggable="true">
+                            <div id="cart1"  data-toggle="modal" data-target="#exampleModal" class="list_item p-2 border bg-gradient-cyan rounded btn-block" draggable="true">
                                 Стартовая карта 1
                             </div>
                         </div>
@@ -96,12 +96,14 @@
             </div>
             <hr>
             <button id="ready_obj" class="btn btn-block btn-outline-primary">Собрать объект</button>
-
             <!--ЭТО ПРОСТО ДИВ ДЛЯ ТОГО ЧТО ПОКАЗАТЬ КАК СОБРАЛСЯ ОБЪЕКТ-->
             <div id="result"></div>
         </div>
     </div>
     <script>
+        /*console.log(document.getElementById('exampleModal'))
+        $('#exampleModal').modal('show')*/
+        //https://htmlacademy.ru/demos/65#4
         const buttonAdd1 = document.getElementById('add_btn1'),
             buttonAdd2 = document.getElementById('add_btn2'),
             buttonAdd3 = document.getElementById('add_btn3'),
@@ -109,8 +111,230 @@
         //console.log(button)
         let idItemsEl = 1
         let idBoardEl = 1
-        let arr = []
-        function dragAndDrop(){
+        let arr = {} // временный от туда можно будет удалять данные или положить данные хз пока
+        let data = {} //финальный объект со всеми данными
+
+        //это инициирует перемещения из правой колонке
+        let dragItem = '' //сюда делаем копию элемента которую будем перемещать
+        let itemId = '' //сюда определяем какой элемент мы перетащили дата и время или просто инпут или текс арея
+        function dragAndDropRightColumn(){
+            //перечисляем все элементы в правой колонке
+            const listItems = document.querySelectorAll('.list_item')
+            //перебераем массивы
+            for(let i = 0; i < listItems.length; i++){
+                const item = listItems[i]
+                //начали перемещать элемент
+                item.addEventListener('dragstart', ()=>{
+                    dragItem = item.cloneNode();
+                    itemId = item.id
+                    //удаление элемента
+                    /* dragItem.addEventListener('dblclick', (e)=>{
+                         //console.log(e.path[0].id)
+                         document.getElementById(e.path[0].id).remove()
+                     })*/
+                    dragItem.id = idItemsEl;
+                    dragItem.setAttribute("draggable", "false");
+                    dragItem.classList.remove('list_item');
+                    dragItem.classList.add("listItemReady");
+                    dragItem.innerText = item.innerText;
+                    //добавляю в массив значения
+                })
+                //Надо сделать так при перетаскивании не удалять элемент сразу а только после того как он dragend совершил
+                //возращаем элемент
+                item.addEventListener('dragend', ()=>{})
+            }
+        }
+        dragAndDropRightColumn()
+        function dragAndDropZones(){
+            //находим все зоны в которые можно скидывать элементы
+            const listsZones = document.querySelectorAll('.boards_items')
+            for(let j = 0; j < listsZones.length; j++){
+                //const listsZon = listsZones[j]
+                //перетакивание на новую доску
+                listsZones[j].addEventListener('dragover', e =>{
+                    e.preventDefault()
+                })
+                listsZones[j].addEventListener('dragenter', function (e){
+                    e.preventDefault() //убираем стандартные работы браузера
+                    //this.style.backgroundColor = 'rgba(0,0,0,.3)'
+                })
+                listsZones[j].addEventListener('dragleave', function (e){
+                    //this.style.backgroundColor = 'rgba(0,0,0,0)'
+                })
+                listsZones[j].addEventListener('drop', function (e){
+                    this.append(dragItem)
+                    showModal()
+                })
+            }
+        }
+        dragAndDropZones()
+        function showModal(){
+            //ТАК НЕ ПРАВИЛЬНО НУЖНО СДЕЛАТЬ ЧТо бы было карсиво без id
+            switch (itemId) {
+                case 'cart1':
+                    $('#modalefefef').modal('show')
+                    document.getElementById('yes').addEventListener('click', yesBtnModalInput)
+                    document.getElementById('no').addEventListener('click', noBtnModal)
+                    break;
+                case 'cart2':
+                    $('#modalefefef2').modal('show')
+                    document.getElementById('yes2').addEventListener('click', yesBtnModalInput)
+                    document.getElementById('no2').addEventListener('click', noBtnModal)
+                    break;
+            }
+        }
+
+        function yesBtnModalInput(){
+            //https://itchief.ru/javascript/associative-arrays
+            switch (itemId) {
+                case 'cart1':
+                    arr[idItemsEl] = {
+                        type: 'input',
+                        textInput: document.getElementById("textInput").value,
+                    }
+                    $('#modalefefef').modal('hide')
+                    document.getElementById("textInput").value = ''
+                    break;
+                case 'cart2':
+                    arr[idItemsEl] = {
+                        type: 'date',
+                        textInput: document.getElementById("textInput").value,
+                    }
+                    $('#modalefefef2').modal('hide')
+                    document.getElementById("textInput").value = ''
+                    break;
+            }
+            idItemsEl++ //для новых id
+            console.log(arr)
+            //document.getElementById('result').append(arr)
+        }
+        function noBtnModal(){
+            dragItem.remove()
+            switch (itemId) {
+                case 'cart1':
+                    $('#modalefefef').modal('hide')
+                    break;
+                case 'cart2':
+                    $('#modalefefef2').modal('hide')
+                    break;
+            }
+            dragItem = ''
+        }
+        //ф-ции для добавления колонок
+        function addBoard1(){
+            const boards = document.querySelector('.boards')
+            const board = document.createElement('div')
+            board.innerHTML = `
+                <div class="fon border-2 rounded mb-3">
+                    <div class="text-center m-2">
+                        <span contenteditable="true" class="title rounded">Название области</span>
+                    </div>
+                    <hr>
+                    <div id="${idBoardEl}" class="row p-2 m-2 zone">
+                        <div id="row${idBoardEl}/col1" class="col-12 boards_items colZone"></div>
+                    </div>
+                </div>`
+            boards.append(board)
+            idBoardEl++
+            dragAndDropZones()
+            //changeTitle()
+        }
+        buttonAdd1.addEventListener('click', addBoard1)
+        //ф-ции для добавления колонок
+        function addBoard2(){
+            const boards = document.querySelector('.boards')
+            const board = document.createElement('div')
+            board.innerHTML = `
+                <div class="fon border-2 rounded mb-3">
+                    <div class="text-center m-2">
+                        <span contenteditable="true" class="title rounded">Название области</span>
+                    </div>
+                    <hr>
+                    <div id="${idBoardEl}" class="row p-2 m-2 zone">
+                        <div id="row${idBoardEl}/col1" class="col-6 boards_items colZone"></div>
+                        <div id="row${idBoardEl}/col2" class="col-6 boards_items colZone"></div>
+                    </div>
+                </div>`
+            boards.append(board)
+            idBoardEl++
+            dragAndDropZones()
+            //changeTitle()
+        }
+        buttonAdd2.addEventListener('click', addBoard2)
+        //ф-ции для добавления колонок
+        function addBoard3(){
+            const boards = document.querySelector('.boards')
+            const board = document.createElement('div')
+            board.innerHTML = `
+                <div class="fon border-2 rounded mb-3">
+                    <div class="text-center m-2">
+                        <span contenteditable="true" class="title rounded">Название области</span>
+                    </div>
+                    <hr>
+                    <div id="${idBoardEl}" class="row zone">
+                        <div id="row${idBoardEl}/col1" class="col-4 boards_items colZone"></div>
+                        <div id="row${idBoardEl}/col2" class="col-4 boards_items colZone"></div>
+                        <div id="row${idBoardEl}/col3" class="col-4 boards_items colZone"></div>
+                    </div>
+                </div>`
+            boards.append(board)
+            idBoardEl++
+            dragAndDropZones()
+            //changeTitle()
+        }
+        buttonAdd3.addEventListener('click', addBoard3)
+        //собираем все карточки в объект
+        function finish(){
+            //тут хочу получить список всех лини у линии есть колонки в которых есть элементы которые мы перенесли
+            const boards = document.querySelector('.boards'),
+                rowItems = boards.querySelectorAll('.zone')
+            //console.log(rowItems)
+            //перебераем массивы
+            for(let i = 0; i < rowItems.length; i++){
+                //console.log(rowItems[i].id)
+                //теперь ищим колонки в зоне!
+                const colItems = rowItems[i].querySelectorAll('.colZone')
+                for (let j = 0; j < colItems.length; j++){
+                    //console.log(colItems[j].id)
+                    const listItemReady = colItems[j].querySelectorAll('.listItemReady')
+                    //теперь ищим карточки с элементами и собираем объект data
+                    for (let k = 0; k < listItemReady.length; k++){
+                        console.log(rowItems[i].id)
+                        console.log(colItems[j].id)
+                        console.log(listItemReady[k].id)
+                        //тут нужно собирать по очереди ключи объекта
+                        // после этого постепенно добавлять просто если даже пустые колонки что бы были с пусты значением
+                        data[rowItems[i].id] = {
+                            [colItems[j].id]: arr[listItemReady[k].id]
+                        }
+                        /*arr[idItemsEl] = {
+                            type: 'input',
+                            textInput: document.getElementById("textInput").value,
+                        }*/
+                    }
+                }
+            }
+            console.log(data)
+        }
+        buttonFinish.addEventListener('click', finish)
+        //function changeTitle(){
+        //    const titles = document.querySelectorAll('.title')
+        //    titles.forEach(title =>{
+        //        title.addEventListener('click', e => {
+        //            console.log(title)
+        //            old = e.target.textContent
+        //            e.target.textContent = ''
+        //        })
+        //    })
+        //}
+        //changeTitle()
+        //var sortable = document.querySelector('.sortable');
+        //console.log(sortable)
+        //
+        //function dragulaF(sortable){
+        //    dragula([sortable]);
+        //}
+        /*function dragAndDrop(){
             const listItems = document.querySelectorAll('.list_item'),
                 lists2 = document.querySelectorAll('.boards_items')
             //перебераем массивы
@@ -170,94 +394,6 @@
                 }
             }
         }
-        dragAndDrop()
-
-        //ф-ции для добавления колонок
-        function addBoard1(){
-            const boards = document.querySelector('.boards')
-            const board = document.createElement('div')
-            board.innerHTML = `
-                <div class="fon border-2 rounded mb-3">
-                    <div class="text-center m-2">
-                        <span contenteditable="true" class="title rounded">Название области</span>
-                    </div>
-                    <hr>
-                    <div id="${idBoardEl}" class="row p-2 m-2">
-                        <div id="row${idBoardEl}/col1" class="col-12 boards_items"></div>
-                    </div>
-                </div>`
-            boards.append(board)
-            idBoardEl++
-            dragAndDrop()
-            //changeTitle()
-        }
-        buttonAdd1.addEventListener('click', addBoard1)
-        //ф-ции для добавления колонок
-        function addBoard2(){
-            const boards = document.querySelector('.boards')
-            const board = document.createElement('div')
-            board.innerHTML = `
-                <div class="fon border-2 rounded mb-3">
-                    <div class="text-center m-2">
-                        <span contenteditable="true" class="title rounded">Название области</span>
-                    </div>
-                    <hr>
-                    <div id="${idBoardEl}" class="row p-2 m-2">
-                        <div id="row${idBoardEl}/col1" class="col-6 boards_items"></div>
-                        <div id="row${idBoardEl}/col2" class="col-6 boards_items"></div>
-                    </div>
-                </div>`
-            boards.append(board)
-            idBoardEl++
-            dragAndDrop()
-            //changeTitle()
-        }
-        buttonAdd2.addEventListener('click', addBoard2)
-        //ф-ции для добавления колонок
-        function addBoard3(){
-            const boards = document.querySelector('.boards')
-            const board = document.createElement('div')
-            board.innerHTML = `
-                <div class="fon border-2 rounded mb-3">
-                    <div class="text-center m-2">
-                        <span contenteditable="true" class="title rounded">Название области</span>
-                    </div>
-                    <hr>
-                    <div id="${idBoardEl}" class="row">
-                        <div id="row${idBoardEl}/col1" class="col-4 boards_items"></div>
-                        <div id="row${idBoardEl}/col2" class="col-4 boards_items"></div>
-                        <div id="row${idBoardEl}/col3" class="col-4 boards_items"></div>
-                    </div>
-                </div>`
-            boards.append(board)
-            idBoardEl++
-            dragAndDrop()
-            //changeTitle()
-        }
-        buttonAdd3.addEventListener('click', addBoard3)
-
-        function finish(){
-            console.log(111)
-        }
-        buttonFinish.addEventListener('click', finish)
-        //function changeTitle(){
-        //    const titles = document.querySelectorAll('.title')
-        //    titles.forEach(title =>{
-        //        title.addEventListener('click', e => {
-        //            console.log(title)
-        //            old = e.target.textContent
-        //            e.target.textContent = ''
-        //        })
-        //    })
-        //}
-        //changeTitle()
-
-        //var sortable = document.querySelector('.sortable');
-        //console.log(sortable)
-        //
-        //function dragulaF(sortable){
-        //    dragula([sortable]);
-        //}
-
+        dragAndDrop()*/
     </script>
 @endsection
