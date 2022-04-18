@@ -76,8 +76,8 @@
             <div class="row mt-2 mb-0 ml-0 mr-0">
                 <!-- эта зона где будут наши отрисованы контент-->
                 <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8 border-right boards ">
-                    <div class="fon border-2 rounded mb-3">
-                        <div id="1" class="row p-2 m-2 zone">
+                    <div class="fon border-2 rounded mb-3 zone">
+                        <div id="1" class="row p-2 m-2 ">
                             <div id="row1/col1" class="col-12 boards_items colZone"></div>
                         </div>
                     </div>
@@ -135,10 +135,11 @@
         //console.log(button)
         let idItemsEl = 2
         let idBoardEl = 2
+        //тут определяем в какие зоны можно скидывать колонки
         function dragAndDropZones()
         {
             //находим все зоны в которые можно скидывать элементы
-            const listsZones = document.querySelectorAll('.boards_items')
+            const listsZones = document.querySelectorAll('.zone')
             for (let j = 0; j < listsZones.length; j++)
             {
                 //const listsZon = listsZones[j]
@@ -154,8 +155,8 @@
                     //this.style.backgroundColor = 'rgba(0,0,0,0)'
                 })
                 listsZones[j].addEventListener('drop', function (e) {
-                    this.append(dragItem)
-                    showModal()
+                    //this это мы определили в какую зону упал этот элемент
+                    console.log(this)
                 })
             }
         }
@@ -166,8 +167,8 @@
             const boards = document.querySelector('.boards')
             const board = document.createElement('div')
             board.innerHTML = `
-                <div class="fon border-2 rounded mb-3">
-                    <div id="${idBoardEl}" class="row p-2 m-2 zone">
+                <div class="fon border-2 rounded mb-3 zone">
+                    <div id="${idBoardEl}" class="row p-2 m-2 ">
                         <div id="row${idBoardEl}/col1" class="col-12 boards_items colZone"></div>
                     </div>
                 </div>`
@@ -180,7 +181,6 @@
         ///!!!!----
         //это перетаскивания для
         addColumns.addEventListener('dragstart', () => {
-            console.log(111)
         })
         addColumns.addEventListener('dragend', () => {})
         ///!!!!----
