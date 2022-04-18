@@ -157,6 +157,7 @@
                 listsZones[j].addEventListener('drop', function (e) {
                     //this это мы определили в какую зону упал этот элемент
                     console.log(this)
+                    console.log(e)
                 })
             }
         }
