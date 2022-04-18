@@ -34,7 +34,8 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        print_r($request);
+        exit();
     }
 
     /**

@@ -2,15 +2,14 @@
 @extends('layouts.main-layout')
 @section('content')
     <a class="btn btn-primary mt-3 mb-2" role="button" href="{{ route('info.create') }}">Добавление пользователя</a>
-    {{--{{print_r('<br><br>')}}
+    {{print_r('<br><br>')}}
     {{print_r('<pre>')}}
-    {{print_r($info->user->name)}}
     {{print_r('</pre>')}}
     {{print_r('<br><br>')}}
     {{print_r('<br><br>')}}
     {{print_r('<br><br>')}}
     {{print_r('<br><br>')}}
-    {{print_r($wdwd)}}--}}
+    {{print_r($wdwd)}}
     @foreach($infoUsers as $info)
         <div class="border rounded m-2 p-2">
             <form class="form-inline">

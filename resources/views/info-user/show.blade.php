@@ -76,8 +76,8 @@
             <div class="row mt-2 mb-0 ml-0 mr-0">
                 <!-- эта зона где будут наши отрисованы контент-->
                 <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8 border-right boards ">
-                    <div class="fon border-2 rounded mb-3 zone">
-                        <div id="1" class="row p-2 m-2 ">
+                    <div id="1" class="fon border-2 rounded mb-3 zone">
+                        <div class="row p-2 m-2 ">
                             <div id="row1/col1" class="col-12 boards_items colZone"></div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                 </div>
             </div>
             <hr>
-            <button id="ready_obj" class="btn btn-block btn-outline-primary">Собрать объект</button>
+            <button id="ready_obj" class="btn btn-block btn-outline-primary">Собрать объект </button>
             <button id="preview" class="btn btn-block btn-outline-primary mt-5">Предпросмотр страницы</button>
             <!--ЭТО ПРОСТО ДИВ ДЛЯ ТОГО ЧТО ПОКАЗАТЬ КАК СОБРАЛСЯ ОБЪЕКТ-->
             <div id="result" class="container-fluid mt-5 p-2"></div>
@@ -134,7 +134,7 @@
 
         //console.log(button)
         let idItemsEl = 2
-        let idBoardEl = 2
+        let idBoardEl = 2 //это наша зона в которую мы добавляем колонки
         //тут определяем в какие зоны можно скидывать колонки
         function dragAndDropZones()
         {
@@ -158,18 +158,26 @@
                     //this это мы определили в какую зону упал этот элемент
                     console.log(this)
                     console.log(e)
+
+                    let board = document.createElement('div')
+                    board.id = `row${idBoardEl}/col1`
+                    board.classList.add("col-12");
+                    board.classList.add("boards_items");
+                    board.classList.add("colZone");
+                    this.append(board)
                 })
             }
+            dragAndDropZones2()
         }
         dragAndDropZones()
         //ф-ции для добавления колонок
         function addBoard()
         {
             const boards = document.querySelector('.boards')
-            const board = document.createElement('div')
+            let board = document.createElement('div')
             board.innerHTML = `
-                <div class="fon border-2 rounded mb-3 zone">
-                    <div id="${idBoardEl}" class="row p-2 m-2 ">
+                <div id="${idBoardEl}"  class="fon border-2 rounded mb-3 zone">
+                    <div class="row p-2 m-2 ">
                         <div id="row${idBoardEl}/col1" class="col-12 boards_items colZone"></div>
                     </div>
                 </div>`
