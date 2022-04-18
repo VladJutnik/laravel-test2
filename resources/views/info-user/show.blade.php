@@ -41,7 +41,7 @@
         }
 
         .fon {
-            min-height: 120px;
+            min-height: 80px;
             background: rgba(207, 205, 205, 0.5);
             padding: 10px;
         }
@@ -61,6 +61,10 @@
         .list_item {
             cursor: move;
         }
+
+        .cursor-move {
+            cursor: move !important;
+        }
     </style>
     <div class="container-fluid">
         {{--  <a href="{{route('type-content.get-all-version', $typeContent->id_global)}}"
@@ -72,19 +76,30 @@
             <div class="row mt-2 mb-0 ml-0 mr-0">
                 <!-- эта зона где будут наши отрисованы контент-->
                 <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8 border-right boards ">
-
+                    <div class="fon border-2 rounded mb-3">
+                        <div id="1" class="row p-2 m-2 zone">
+                            <div id="row1/col1" class="col-12 boards_items colZone"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                    <div class=" start-cart">
-                        <div id="add_btn1" class="add_btn border-success border p-2 md-2 rounded btn-block">
+                    <div class="start-cart">
+                        <div id="addLine" class="btn btn-outline-primary btn-block cursor-pointer">
+                            <span> + </span> Добавить строку
+                        </div>
+                        <div id="addColumns" class="btn btn-outline-success btn-block cursor-move" draggable="true">
+                            <span> + </span> Добавить колонку
+                        </div>
+
+                       {{-- <div id="add_btn1" class="btn btn-outline-succes p-2 md-2 rounded btn-block">
                             <span> + </span> Добавить редактируемое поле c 1-ой колонкой
                         </div>
-                        <div id="add_btn2" class="add_btn border-success border p-2 md-2 rounded btn-block">
+                        <div id="add_btn2" class="add_btn btn btn-outline-succes p-2 md-2 rounded btn-block">
                             <span> + </span> Добавить редактируемое поле c 2-мя колонками
                         </div>
-                        <div id="add_btn3" class="add_btn border-success border p-2 md-2 rounded btn-block">
+                        <div id="add_btn3" class="add_btn btn btn-outline-succes p-2 md-2 rounded btn-block">
                             <span> + </span> Добавить редактируемое поле c 3-мя колонками
-                        </div>
+                        </div>--}}
                         <div class="crt1 mt-2">
                             <div id="cart1" data-toggle="modal" data-target="#exampleModal"
                                  class="list_item p-2 border bg-gradient-cyan rounded btn-block" draggable="true">
@@ -112,16 +127,115 @@
         /*console.log(document.getElementById('exampleModal'))
         $('#exampleModal').modal('show')*/
         //https://htmlacademy.ru/demos/65#4
+
+        //НОВЫЙ ФУНКЦИОНАЛ
+        const addLine = document.getElementById('addLine'),
+            addColumns = document.getElementById('addColumns')
+
+        //console.log(button)
+        let idItemsEl = 2
+        let idBoardEl = 2
+        function dragAndDropZones()
+        {
+            //находим все зоны в которые можно скидывать элементы
+            const listsZones = document.querySelectorAll('.boards_items')
+            for (let j = 0; j < listsZones.length; j++)
+            {
+                //const listsZon = listsZones[j]
+                //перетакивание на новую доску
+                listsZones[j].addEventListener('dragover', e => {
+                    e.preventDefault()
+                })
+                listsZones[j].addEventListener('dragenter', function (e) {
+                    e.preventDefault() //убираем стандартные работы браузера
+                    //this.style.backgroundColor = 'rgba(0,0,0,.3)'
+                })
+                listsZones[j].addEventListener('dragleave', function (e) {
+                    //this.style.backgroundColor = 'rgba(0,0,0,0)'
+                })
+                listsZones[j].addEventListener('drop', function (e) {
+                    this.append(dragItem)
+                    showModal()
+                })
+            }
+        }
+        dragAndDropZones()
+        //ф-ции для добавления колонок
+        function addBoard()
+        {
+            const boards = document.querySelector('.boards')
+            const board = document.createElement('div')
+            board.innerHTML = `
+                <div class="fon border-2 rounded mb-3">
+                    <div id="${idBoardEl}" class="row p-2 m-2 zone">
+                        <div id="row${idBoardEl}/col1" class="col-12 boards_items colZone"></div>
+                    </div>
+                </div>`
+            boards.append(board)
+            idBoardEl++
+            dragAndDropZones()
+            //changeTitle()
+        }
+        addLine.addEventListener('click', addBoard)
+        ///!!!!----
+        //это перетаскивания для
+        addColumns.addEventListener('dragstart', () => {
+            console.log(111)
+        })
+        addColumns.addEventListener('dragend', () => {})
+        ///!!!!----
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //СТАРЫЕ ФУНКЦИИ
         const buttonAdd1 = document.getElementById('add_btn1'),
             buttonAdd2 = document.getElementById('add_btn2'),
             buttonAdd3 = document.getElementById('add_btn3'),
             buttonFinish = document.getElementById('ready_obj'),
             buttonPreview = document.getElementById('preview')
-        //console.log(button)
-        let idItemsEl = 1
-        let idBoardEl = 1
+
         let arr = {} // временный от туда можно будет удалять данные или положить данные хз пока
         let data = [] //финальный объект со всеми данными
+        let fff = [
+            {
+                idRow: "1",
+                nameRow: "Название области",
+                col: [
+                     {
+                         idCol: "row1/col1",
+                         element: [
+                            {id: 1,textInput: "wdwdwd",type: "input"}
+                         ]
+                     }
+                ]
+            },
+            {
+                idRow: "2",
+                nameRow: "Название области",
+                col: [
+                     {
+                         idCol: "row2/col1",
+                         element: [
+                            {id: 4, type: 'date', textInput: 'efefefefef'},
+                            {id: 6, type: 'input', textInput: 'gggggggggg'},
+                            {id: 7, type: 'input', textInput: 'ffff'},
+                         ]
+                     },
+                     {
+                         idCol: "row2/col2",
+                         element: [
+                            {id: 2, type: 'date', textInput: 'wdwdwd'}
+                         ]
+                     },
+                     {
+                         idCol: "row2/col3",
+                         element: [
+                             {id: 8, type: 'input', textInput: 'ffff'},
+                             {id: 3, type: 'input', textInput: 'efefefef'}
+                         ]
+                     }
+                ]
+            }
+        ]
         //это инициирует перемещения из правой колонке
         let dragItem = '' //сюда делаем копию элемента которую будем перемещать
         let itemId = '' //сюда определяем какой элемент мы перетащили дата и время или просто инпут или текс арея
@@ -151,12 +265,11 @@
                 })
                 //Надо сделать так при перетаскивании не удалять элемент сразу а только после того как он dragend совершил
                 //возращаем элемент
-                item.addEventListener('dragend', () => {
-                })
+                item.addEventListener('dragend', () => {})
             }
         }
         dragAndDropRightColumn()
-        function dragAndDropZones()
+        function dragAndDropZones2()
         {
             //находим все зоны в которые можно скидывать элементы
             const listsZones = document.querySelectorAll('.boards_items')
@@ -180,8 +293,7 @@
                 })
             }
         }
-        dragAndDropZones()
-
+        dragAndDropZones2()
         //фнкции работы с модальными окнами
         function showModal()
         {
@@ -242,9 +354,8 @@
             }
             dragItem = ''
         }
-
         //ф-ции для добавления колонок
-        function addBoard1()
+        function addBoard11()
         {
             const boards = document.querySelector('.boards')
             const board = document.createElement('div')
@@ -262,7 +373,7 @@
             dragAndDropZones()
             //changeTitle()
         }
-        buttonAdd1.addEventListener('click', addBoard1)
+        buttonAdd1.addEventListener('click', addBoard11)
         //ф-ции для добавления колонок
         function addBoard2()
         {
@@ -306,7 +417,6 @@
             //changeTitle()
         }
         buttonAdd3.addEventListener('click', addBoard3)
-
         //собираем все карточки в объект
         function finish()
         {
@@ -413,6 +523,7 @@
         {
             let content = '';
             if(data !== []){
+                //console.log(data)
                 content += '<div class="container-fluid rounded border border-primary">'
                 data.forEach(function(item, i, arr) {
                     //console.log(item.col)
@@ -430,7 +541,8 @@
                                         <input type="text" class="form-control" id="${item.id}">
                                         <br>
                                     `
-                                } else if(item.type === "date"){
+                                }
+                                else if(item.type === "date"){
                                     content += `
                                         <label for="${item.id}">${item.textInput}</label>
                                         <input type="date" class="form-control " id="${item.id}">
@@ -440,7 +552,8 @@
                             })
                             content += '</div>'
                         })
-                    } else if(item.col.length === 2){
+                    }
+                    else if(item.col.length === 2){
                         item.col.forEach(function(item, i, arr) {
                             //console.log(item)
                             content += '<div class="col-6">'
@@ -462,7 +575,8 @@
                             })
                             content += '</div>'
                         })
-                    } else {
+                    }
+                    else {
                         item.col.forEach(function(item, i, arr) {
                             //console.log(item)
                             content += '<div class="col-4">'
@@ -496,7 +610,98 @@
             }
             $('#result').html(content);
         }
-        buttonPreview.addEventListener('click', preview)
+        function preview2()
+        {
+            let content = '';
+            if(fff !== []){
+                console.log(fff)
+                content += '<div class="container-fluid rounded border border-primary">'
+                fff.forEach(function(item, i, arr) {
+                    console.log(item.col)
+                    content += '<div class="row">'
+                    content += `<h5 class="text-center mb-2">${item.nameRow}</h5>`
+                    if(item.col.length === 1){
+                        item.col.forEach(function(item, i, arr) {
+                            console.log(item)
+                            content += '<div class="col-12">'
+                            item.element.forEach(function(item, i, arr) {
+                                //console.log(item)
+                                if(item.type === "input"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="text" class="form-control" id="${item.id}">
+                                        <br>
+                                    `
+                                }
+                                else if(item.type === "date"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="date" class="form-control " id="${item.id}">
+                                        <br>
+                                    `
+                                }
+                            })
+                            content += '</div>'
+                        })
+                    }
+                    else if(item.col.length === 2){
+                        item.col.forEach(function(item, i, arr) {
+                            //console.log(item)
+                            content += '<div class="col-6">'
+                            item.element.forEach(function(item, i, arr) {
+                                //console.log(item)
+                                if(item.type === "input"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="text" class="form-control" id="${item.id}">
+                                        <br>
+                                    `
+                                } else if(item.type === "date"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="date" class="form-control " id="${item.id}">
+                                        <br>
+                                    `
+                                }
+                            })
+                            content += '</div>'
+                        })
+                    }
+                    else {
+                        item.col.forEach(function(item, i, arr) {
+                            //console.log(item)
+                            content += '<div class="col-4">'
+                            item.element.forEach(function(item, i, arr) {
+                                //console.log(item)
+                                if(item.type === "input"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="text" class="form-control" id="${item.id}">
+                                        <br>
+                                    `
+                                } else if(item.type === "date"){
+                                    content += `
+                                        <label for="${item.id}">${item.textInput}</label>
+                                        <input type="date" class="form-control " id="${item.id}">
+                                        <br>
+                                    `
+                                }
+                            })
+                            content += '</div>'
+                        })
+                    }
+                    content += '</div><br>'
+                })
+                content += '</div>'
+            } else {
+                content += `
+                    <div class="alert alert-danger text-center font-weight-bold" role="alert">
+                        Данных на странице не найдено! Добавьте колонки и элементы на страницу!
+                    </div>`
+            }
+            $('#result').html(content);
+        }
+        buttonPreview.addEventListener('click', preview2)
         //Это были первые наброски
         //function changeTitle(){
         //    const titles = document.querySelectorAll('.title')

@@ -9,9 +9,6 @@
                 <button id="yes">Сохранить</button>
                 <button id="no">Отменить</button>
             </div>
-            <div class="modal-footer">
-                wdwd
-            </div>
         </div>
     </div>
 </div>
