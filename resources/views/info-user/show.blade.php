@@ -116,7 +116,7 @@
                 </div>
             </div>
             <hr>
-            <button id="ready_obj" class="btn btn-block btn-outline-primary">Собрать объект</button>
+            <button id="ready_obj" class="btn btn-block btn-outline-primary">Собрать объект wdwdwd</button>
             <button id="preview" class="btn btn-block btn-outline-primary mt-5">Предпросмотр страницы</button>
             <!--ЭТО ПРОСТО ДИВ ДЛЯ ТОГО ЧТО ПОКАЗАТЬ КАК СОБРАЛСЯ ОБЪЕКТ-->
             <div id="result" class="container-fluid mt-5 p-2"></div>
