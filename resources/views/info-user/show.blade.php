@@ -298,11 +298,16 @@
                 })
                 listsZones[j].addEventListener('drop', function (e) {
                     this.append(dragItem)
+                    /*if ()*/
                     showModal()
                 })
             }
         }
         dragAndDropZones2()
+        let dd = [
+            gg => ['inpeut value = "" ']
+        ]
+
         //фнкции работы с модальными окнами
         function showModal()
         {
