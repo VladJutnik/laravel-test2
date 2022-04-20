@@ -65,6 +65,18 @@
         .cursor-move {
             cursor: move !important;
         }
+        .super_row{
+            display: flex;
+            justify-content: space-around;
+        }
+        .super_row{
+            min-width: 100%;
+        }
+        .col{
+            border: 1px solid black;
+            border-radius: 5px;
+            height: 100px;
+        }
     </style>
     <div class="container-fluid">
         {{--  <a href="{{route('type-content.get-all-version', $typeContent->id_global)}}"
@@ -77,8 +89,8 @@
                 <!-- эта зона где будут наши отрисованы контент-->
                 <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8 border-right boards ">
                     <div class="fon border-2 rounded mb-3 zone">
-                        <div id="1" class="row2222 p-2 m-2 ">
-                            <div id="row1/col1" class="col1111 boards_items colZone"></div>
+                        <div id="1" class="row2222 p-2 m-2 super_row">
+                            <div id="row1/col1" class="col boards_items colZone"></div>
                         </div>
                     </div>
                 </div>
@@ -167,8 +179,8 @@
             const board = document.createElement('div')
             board.innerHTML = `
                 <div class="fon border-2 rounded mb-3 zone">
-                    <div id="${idBoardEl}" class="row p-2 m-2 ">
-                        <div id="row${idBoardEl}/col1" class="col-12 boards_items colZone"></div>
+                    <div id="${idBoardEl}" class=" p-2 m-2 super_row">
+                        <div id="row${idBoardEl}/col1" class="col boards_items colZone"></div>
                     </div>
                 </div>`
             boards.append(board)
@@ -189,17 +201,16 @@
                 item.addEventListener('dragstart', () => {
                     console.log(item.id)
                     if(item.id === 'addColumns'){
-                        addColumAll = true
+                        itemId = item.id
                         dragItem = document.createElement('div')
-                        dragItem.id = `row${idBoardEl}/col1`
-                        dragItem.classList.add("col-12");
+                        dragItem.classList.add("col");
                         dragItem.classList.add("boards_items");
                         dragItem.classList.add("colZone");
                     } else {
                         dragItem = item.cloneNode();
                         itemId = item.id
                         dragItem.id = idItemsEl;
-                        dragItem.setAttribute("draggable", "false");
+                        //dragItem.setAttribute("draggable", "false");
                         dragItem.classList.remove('list_item');
                         dragItem.classList.add("listItemReady");
                         dragItem.innerText = item.innerText;
@@ -233,19 +244,22 @@
                     //this.style.backgroundColor = 'rgba(0,0,0,.3)'
                 })
                 listsZones[j].addEventListener('dragleave', function (e) {
-                    //this.style.backgroundColor = 'rgba(0,0,0,0)'
+                    //console.log(e)
                 })
                 listsZones[j].addEventListener('drop', function (e) {
-                    if(addColumAll === false){
+                    if(itemId !== 'addColumns'){
                         this.append(dragItem)
                         showModal()
                     } else {
+                        console.log(e.target.offsetParent)
+                        console.log(e.target)
                         console.log(e)
                         let colZone = document.getElementById(e.path[1].id)
                         let colZoneOne = colZone.querySelectorAll('.colZone')
                         if(colZoneOne.length === 3){
                             alert('Вы больше не можете добавить сюда колонки!')
                         } else {
+                            dragItem.id = `row${idBoardEl}/col1`
                             colZoneOne.forEach(function(item, i, arr) {
                                 if(colZoneOne.length === 1){
                                     item.classList.remove('col-12');
@@ -254,7 +268,6 @@
                                 }
                             })
                             colZone.append(dragItem)
-                            addColumAll = false
                             dragAndDropZones()
                         }
                     }
