@@ -287,9 +287,7 @@
                 case 'textField':
                     $('#modalefefef').modal('show')
                     ddd = '<label for="textInput">Наименование элемента</label>' +
-                        '<input type="text" class="form-control textInput" id="textInput">' +
-                        '<button id="yes" class="yes">Сохранить</button>' +
-                        '<button id="no" class="no">Отменить</button>'
+                        '<input type="text" class="form-control textInput" id="textInput">'
 
                     break;
                 case 'dateField':
@@ -298,6 +296,8 @@
                     document.getElementById('no2').addEventListener('click', noBtnModal)
                     break;
             }
+            ddd += '<button id="yes" class="yes">Сохранить</button>'+
+                '<button id="no" class="no">Отменить</button>'
             document.getElementById('resultModalS').innerHTML += ddd
             document.querySelector('.modal-title').innerHTML = 'Работа с тектовым полем'
             document.getElementById('yes').addEventListener('click', yesBtnModalInput)
