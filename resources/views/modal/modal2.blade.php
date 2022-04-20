@@ -8,8 +8,8 @@
             <div class="modal-body">
                 <label for="textInput">Наименование элемента</label>
                 <input type="text" class="form-control textInput2" id="textInput">
-                <button id="yes2" class="yes">Сохранить</button>
-                <button id="no2" class="no">Отменить</button>
+                <button id="yes" class="yes">Сохранить</button>
+                <button id="no" class="no">Отменить</button>
             </div>
             <div class="modal-footer">
                 wdwd

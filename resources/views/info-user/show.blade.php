@@ -75,7 +75,7 @@
         .col{
             border: 1px solid black;
             border-radius: 5px;
-            height: 100px;
+            min-height: 100px;
         }
     </style>
     <div class="container-fluid">
@@ -169,7 +169,7 @@
         let data = [] //финальный объект со всеми данными
         let dragItem = '' //сюда делаем копию элемента которую будем перемещать
         let itemId = '' //сюда определяем какой элемент мы перетащили дата и время или просто инпут или текс арея
-        let idItemsEl = 2 //id элементов куда тащим элементы
+        let idItemsEl = 1 //id элементов куда тащим элементы
         let idBoardEl = 2 // id доски куда тащим элементы
         let addColumAll = false // если перетаскиваем колонку
         //ф-ции для добавления колонок
@@ -279,13 +279,18 @@
         //фнкции работы с модальными окнами
         function showModal()
         {
+            console.log(itemId)
             //ТАК НЕ ПРАВИЛЬНО НУЖНО СДЕЛАТЬ ЧТо бы было карсиво без id
+            let ddd = ''
             switch (itemId)
             {
                 case 'textField':
                     $('#modalefefef').modal('show')
-                    document.getElementById('yes').addEventListener('click', yesBtnModalInput)
-                    document.getElementById('no').addEventListener('click', noBtnModal)
+                    ddd = '<label for="textInput">Наименование элемента</label>' +
+                        '<input type="text" class="form-control textInput" id="textInput">' +
+                        '<button id="yes" class="yes">Сохранить</button>' +
+                        '<button id="no" class="no">Отменить</button>'
+
                     break;
                 case 'dateField':
                     $('#modalefefef2').modal('show')
@@ -293,13 +298,17 @@
                     document.getElementById('no2').addEventListener('click', noBtnModal)
                     break;
             }
+            document.getElementById('resultModalS').innerHTML += ddd
+            document.querySelector('.modal-title').innerHTML = 'Работа с тектовым полем'
+            document.getElementById('yes').addEventListener('click', yesBtnModalInput)
+            document.getElementById('no').addEventListener('click', noBtnModal)
         }
         function yesBtnModalInput()
         {
             //https://itchief.ru/javascript/associative-arrays
             switch (itemId)
             {
-                case 'cart1':
+                case 'textField':
                     arr[idItemsEl] = {
                         id: idItemsEl,
                         type: 'input',
@@ -307,6 +316,7 @@
                     }
                     $('#modalefefef').modal('hide')
                     document.querySelector(".textInput").value = ''
+                    document.getElementById('resultModalS').innerHTML = ''
                     break;
                 case 'cart2':
                     arr[idItemsEl] = {

@@ -2,18 +2,9 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">wdwwd</h4>
-                <!--                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+                <h4 class="modal-title text-center"></h4>
             </div>
-            <div class="modal-body">
-                <label for="textInput">Наименование элемента</label>
-                <input type="text" class="form-control textInput" id="textInput">
-                <button id="yes" class="yes">Сохранить</button>
-                <button id="no" class="no">Отменить</button>
-            </div>
-            <div class="modal-footer">
-                wdwd
-            </div>
+            <div id="resultModalS" class="modal-body"></div>
         </div>
     </div>
 </div>
