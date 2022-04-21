@@ -199,7 +199,7 @@
                 const item = listItems[i]
                 //начали перемещать элемент
                 item.addEventListener('dragstart', () => {
-                    console.log(item.id)
+                    console.log(item)
                     if(item.id === 'addColumns'){
                         itemId = item.id
                         dragItem = document.createElement('div')
@@ -211,7 +211,7 @@
                         itemId = item.id
                         dragItem.id = idItemsEl;
                         //dragItem.setAttribute("draggable", "false");
-                        dragItem.classList.remove('list_item');
+                        //dragItem.classList.remove('list_item');
                         dragItem.classList.add("listItemReady");
                         dragItem.innerText = item.innerText;
                     }
@@ -247,13 +247,14 @@
                     //console.log(e)
                 })
                 listsZones[j].addEventListener('drop', function (e) {
+                    //ТУТ НУЖНО ПРОВЕРЯТЬ ЕСЛИ МЫ ПЕРЕТАСКИВАЕМ ПРОСТО ЭЛЕМЕНТ НА СТРАНИЦЕ ИЛИ ТАЩИМ ИЗ ПРАВОЙ КОЛОНКЕ ТОГДА БУДЕТ РАБОТАТЬ ПЕРЕТАСКИВАНИЯ
                     if(itemId !== 'addColumns'){
                         this.append(dragItem)
                         showModal()
                     } else {
-                        console.log(e.target.offsetParent)
-                        console.log(e.target)
-                        console.log(e)
+                        //console.log(e.target.offsetParent)
+                        //console.log(e.target)
+                        //console.log(e)
                         let colZone = document.getElementById(e.path[1].id)
                         let colZoneOne = colZone.querySelectorAll('.colZone')
                         if(colZoneOne.length === 3){
@@ -287,7 +288,8 @@
                 case 'textField':
                     $('#modalefefef').modal('show')
                     ddd = '<label for="textInput">Наименование элемента</label>' +
-                        '<input type="text" class="form-control textInput" id="textInput">'
+                        '<input type="text" class="form-control textInput" id="textInput" value="'+arr[idItemsEl.id]+'" >'
+                        //'<input type="text" class="form-control textInput" id="textInput" value="'+(arr[idItemsEl])? : +'">'
 
                     break;
                 case 'dateField':
@@ -329,7 +331,7 @@
                     break;
             }
             idItemsEl++ //для новых id
-            //console.log(arr)
+            console.log(arr['1'].id)
             //document.getElementById('result').append(arr)
         }
         function noBtnModal()
@@ -377,7 +379,7 @@
                             //тут нужно собирать по очереди ключи объекта
                             // после этого постепенно добавлять просто если даже пустые колонки что бы были с пусты значением
                             //console.log(colItems[j].id)
-                            //console.log(listItemReady[k].id)
+                            console.log(listItemReady[k].id)
                             //console.log(11111)
                             arr2.push(arr[listItemReady[k].id])
                             //Object.assign(col, arr[listItemReady[k].id])
@@ -390,7 +392,6 @@
                 }
                 data.push({
                     idRow: rowItems[i].id,
-                    nameRow: rowItems[i].parentNode.querySelector('span').textContent,
                     col: col
                 })
                 col = {}
@@ -426,9 +427,9 @@
                             //console.log(listItemReady[k].id)
                             //тут нужно собирать по очереди ключи объекта
                             // после этого постепенно добавлять просто если даже пустые колонки что бы были с пусты значением
-                            console.log(colItems[j].id)
-                            console.log(listItemReady[k].id)
-                            console.log(11111)
+                            //console.log(colItems[j].id)
+                            //console.log(listItemReady[k].id)
+                            //console.log(11111)
                             Object.assign(col, arr[listItemReady[k].id])
                         }
                     }
@@ -546,7 +547,7 @@
                 console.log(fff)
                 content += '<div class="container-fluid rounded border border-primary">'
                 fff.forEach(function(item, i, arr) {
-                    console.log(item.col)
+                    //console.log(item.col)
                     content += '<div class="row">'
                     content += `<h5 class="text-center mb-2">${item.nameRow}</h5>`
                     if(item.col.length === 1){
